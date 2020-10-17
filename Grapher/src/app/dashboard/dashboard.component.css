@@ -1,0 +1,21 @@
+.quick-link{
+    font-size: 30px;
+    list-style-type:none
+}
+
+li{
+    border: 1px solid black;
+    padding: 10px;
+    width: 20%;
+    background-color: blue;
+    margin: 10px;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    color: yellow;
+  }

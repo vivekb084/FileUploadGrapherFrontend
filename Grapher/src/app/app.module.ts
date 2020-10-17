@@ -9,6 +9,8 @@ import { FileGraphsComponent } from './file-graphs/file-graphs.component';
 import { FileGraphBarChartComponent } from './file-graph-bar-chart/file-graph-bar-chart.component';
 import { FileGraphPieComponent } from './file-graph-pie/file-graph-pie.component';
 import { FileGraphDoughnutChartComponent } from './file-graph-doughnut-chart/file-graph-doughnut-chart.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,12 +19,14 @@ import { FileGraphDoughnutChartComponent } from './file-graph-doughnut-chart/fil
     FileGraphsComponent,
     FileGraphBarChartComponent,
     FileGraphPieComponent,
-    FileGraphDoughnutChartComponent
+    FileGraphDoughnutChartComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

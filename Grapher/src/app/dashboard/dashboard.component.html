@@ -1,0 +1,24 @@
+<ul class="quick-link">
+    <li>
+       <a routerLink="/fileUpload">Upload File</a>
+    </li>
+    <li>
+       <a routerLink="/lineChartAnalysis/{{submitFileData}}" target="_blank">Line Chart Analysis</a>
+    </li>
+    <li>
+        <a routerLink="/BarChartAnalysis/{{submitFileData}}" target="_blank">Bar Chart Analysis</a>
+     </li>
+     <li>
+        <a routerLink="/PieChartAnalysis/{{submitFileData}}" target="_blank">Pie Chart Analysis</a>
+     </li>
+     <li>
+        <a routerLink="/DoughNutAnalysis/{{submitFileData}}" target="_blank">DoughNut Analysis</a>
+     </li>
+ </ul>
+
+
+ <div class="quick-link">
+    <input type="text"  id="FileId" name="FileName"
+    placeholder="Enter FileId" [(ngModel)]="fileId">
+    <button (click)="submitFileId()">Submit</button>
+ </div>

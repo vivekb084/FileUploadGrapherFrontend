@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FileUploadService } from '../../services/file-upload.service';
 import { getCityWiseData, getFileData, getPaymentWiseData, getProductWiseData, getStateWiseData } from '../constant/ApiUrl';
 import Chart from 'chart.js'
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-file-graphs',
@@ -10,6 +12,7 @@ import Chart from 'chart.js'
 })
 export class FileGraphsComponent implements OnInit {
 
+  public fileId:any = ''
   public result:any = {};
   public erMessage:any = {}
   public LinechartCityWise = [];  
@@ -21,17 +24,20 @@ export class FileGraphsComponent implements OnInit {
   public productWiseResult:any = []
   public paymentWiseResult:any = []
 
-  constructor(public fileUploadService:FileUploadService) { }
+  constructor(public fileUploadService:FileUploadService,private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getCityWiseData();
-    this.productWiseData()
-    this.getStateWiseData();
-    this.paymentWiseData()
+    this.route.params.subscribe(params => {
+      this.fileId = params['fileId'];  
+      this.getCityWiseData();
+      this.productWiseData()
+      this.getStateWiseData();
+      this.paymentWiseData()      
+    });
   }
 
   // public getFileData() {
-  //     this.fileUploadService.getData(getFileData,{params:{fileId:'5f8b041fdf1c18dc334fee94'}}).subscribe(data => {
+  //     this.fileUploadService.getData(getFileData,{params:{fileId:this.fileId}}).subscribe(data => {
   //         this.result=data;
   //       }, error => {
   //         this.erMessage=error.error
@@ -40,7 +46,7 @@ export class FileGraphsComponent implements OnInit {
   // }
 
   public getCityWiseData() {
-    this.fileUploadService.getData(getCityWiseData,{params:{fileId:'5f8b041fdf1c18dc334fee94'}}).subscribe(result => {
+    this.fileUploadService.getData(getCityWiseData,{params:{fileId:this.fileId}}).subscribe(result => {
         this.cityWiseResult=result.data;
         this.createLineChartCityWise(this.cityWiseResult)
       }, error => {
@@ -82,7 +88,7 @@ export class FileGraphsComponent implements OnInit {
   }
 
   public getStateWiseData() {
-    this.fileUploadService.getData(getStateWiseData,{params:{fileId:'5f8b041fdf1c18dc334fee94'}}).subscribe(result => {
+    this.fileUploadService.getData(getStateWiseData,{params:{fileId:this.fileId}}).subscribe(result => {
         this.stateWiseResult=result.data;
         this.createLineChartStateWise(this.stateWiseResult)
       }, error => {
@@ -123,7 +129,7 @@ export class FileGraphsComponent implements OnInit {
   }
 
   public productWiseData() {
-    this.fileUploadService.getData(getProductWiseData,{params:{fileId:'5f8b041fdf1c18dc334fee94'}}).subscribe(result => {
+    this.fileUploadService.getData(getProductWiseData,{params:{fileId:this.fileId}}).subscribe(result => {
         this.productWiseResult=result.data;
         this.createLineChartProductWise(this.productWiseResult)
       }, error => {
@@ -165,7 +171,7 @@ export class FileGraphsComponent implements OnInit {
 
 
   public paymentWiseData() {
-    this.fileUploadService.getData(getPaymentWiseData,{params:{fileId:'5f8b041fdf1c18dc334fee94'}}).subscribe(result => {
+    this.fileUploadService.getData(getPaymentWiseData,{params:{fileId:this.fileId}}).subscribe(result => {
         this.paymentWiseResult=result.data;
         this.createLineChartPaymentWise(this.paymentWiseResult)
       }, error => {

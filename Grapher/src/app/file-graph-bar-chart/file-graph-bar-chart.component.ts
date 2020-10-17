@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FileUploadService } from '../../services/file-upload.service';
 import Chart from 'chart.js'
-import { getCityWiseData, getFileData, getPaymentWiseData, getProductWiseData, getStateWiseData } from '../constant/ApiUrl';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { getCityWiseData, getPaymentWiseData, getProductWiseData, getStateWiseData } from '../constant/ApiUrl';
 
 
 @Component({
@@ -12,6 +14,7 @@ import { getCityWiseData, getFileData, getPaymentWiseData, getProductWiseData, g
 export class FileGraphBarChartComponent implements OnInit {
 
   public erMessage:any = {}
+  public fileId:any = ''
   public BarChartCityWise = [];  
   public BarChartStateWise = [];  
   public BarChartProducteWise = [];  
@@ -21,13 +24,16 @@ export class FileGraphBarChartComponent implements OnInit {
   public productWiseResult:any = []
   public paymentWiseResult:any = []
 
-  constructor(public fileUploadService:FileUploadService) { }
+  constructor(public fileUploadService:FileUploadService,private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getCityWiseData();
-    this.productWiseData()
-    this.getStateWiseData();
-    this.paymentWiseData()
+    this.route.params.subscribe(params => {
+      this.fileId = params['fileId'];  
+      this.getCityWiseData();
+      this.productWiseData()
+      this.getStateWiseData();
+      this.paymentWiseData()      
+    });
   }
 
   public generateHexColor(count){
@@ -39,7 +45,7 @@ export class FileGraphBarChartComponent implements OnInit {
   }
 
   public getCityWiseData() {
-    this.fileUploadService.getData(getCityWiseData,{params:{fileId:'5f8b041fdf1c18dc334fee94'}}).subscribe(result => {
+    this.fileUploadService.getData(getCityWiseData,{params:{fileId:this.fileId}}).subscribe(result => {
         this.cityWiseResult=result.data;
         this.createBarChartCityWise(this.cityWiseResult)
       }, error => {
@@ -81,7 +87,7 @@ export class FileGraphBarChartComponent implements OnInit {
   }
 
   public getStateWiseData() {
-    this.fileUploadService.getData(getStateWiseData,{params:{fileId:'5f8b041fdf1c18dc334fee94'}}).subscribe(result => {
+    this.fileUploadService.getData(getStateWiseData,{params:{fileId:this.fileId}}).subscribe(result => {
         this.stateWiseResult=result.data;
         this.createBarChartStateWise(this.stateWiseResult)
       }, error => {
@@ -122,7 +128,7 @@ export class FileGraphBarChartComponent implements OnInit {
   }
 
   public productWiseData() {
-    this.fileUploadService.getData(getProductWiseData,{params:{fileId:'5f8b041fdf1c18dc334fee94'}}).subscribe(result => {
+    this.fileUploadService.getData(getProductWiseData,{params:{fileId:this.fileId}}).subscribe(result => {
         this.productWiseResult=result.data;
         this.createBarChartProductWise(this.productWiseResult)
       }, error => {
@@ -164,7 +170,7 @@ export class FileGraphBarChartComponent implements OnInit {
 
 
   public paymentWiseData() {
-    this.fileUploadService.getData(getPaymentWiseData,{params:{fileId:'5f8b041fdf1c18dc334fee94'}}).subscribe(result => {
+    this.fileUploadService.getData(getPaymentWiseData,{params:{fileId:this.fileId}}).subscribe(result => {
         this.paymentWiseResult=result.data;
         this.createBarChartPaymentWise(this.paymentWiseResult)
       }, error => {

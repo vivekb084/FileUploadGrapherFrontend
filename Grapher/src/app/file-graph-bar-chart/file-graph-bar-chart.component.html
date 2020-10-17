@@ -1,4 +1,8 @@
-<div class="chart-container" >  
+
+<h2 style="color: red;">{{erMessage.message}}</h2>
+
+<div *ngIf="!(erMessage && erMessage.message!=undefined)">
+  <div class="chart-container" >  
     <h2>CityWise User</h2>  
     <canvas id="canvas1">{{ BarChartCityWise }}</canvas>    
   </div>  
@@ -18,3 +22,7 @@
     <h2>PaymentWise User</h2>  
     <canvas id="canvas4">{{ BarChartPaymentWise }}</canvas>    
   </div>  
+</div>
+
+
+
