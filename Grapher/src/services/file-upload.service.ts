@@ -20,6 +20,12 @@ export class FileUploadService {
     );;
   }
 
+  public getData(url:string,data={}): Observable<any> {
+    return this.http.get(url,data).pipe(
+      catchError(this.handleError),
+    );;
+  }
+
   public handleError(error: HttpErrorResponse){
     console.log("Error found ",error);
     return throwError(error);
