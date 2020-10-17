@@ -7,13 +7,17 @@ import { AppComponent } from './app.component';
 import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 import { FileGraphsComponent } from './file-graphs/file-graphs.component';
 import { FileGraphBarChartComponent } from './file-graph-bar-chart/file-graph-bar-chart.component';
+import { FileGraphPieComponent } from './file-graph-pie/file-graph-pie.component';
+import { FileGraphDoughnutChartComponent } from './file-graph-doughnut-chart/file-graph-doughnut-chart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FileUploaderComponent,
     FileGraphsComponent,
-    FileGraphBarChartComponent
+    FileGraphBarChartComponent,
+    FileGraphPieComponent,
+    FileGraphDoughnutChartComponent
   ],
   imports: [
     BrowserModule,
