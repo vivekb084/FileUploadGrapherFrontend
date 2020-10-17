@@ -11,7 +11,8 @@ import { uploadFile } from '../constant/ApiUrl';
 export class FileUploaderComponent implements OnInit {
 
   public fileToUpload: File = null;
-  public result:any = [];
+  public result:any = {};
+  public erMessage:any = {}
 
   constructor(public fileUploadService:FileUploadService) { }
 
@@ -19,15 +20,24 @@ export class FileUploaderComponent implements OnInit {
   }
 
   uploadFileToActivity() {
+    this.erMessage= {};
+    this.result = {}
+    if(this.fileToUpload == null ){
+      this.erMessage.message='Please Select File';
+      return ;
+    }
     this.fileUploadService.postFile(this.fileToUpload,uploadFile).subscribe(data => {
         this.result=data;
         console.log(this.result)
       }, error => {
+        this.erMessage=error.error
         console.log(error);
       });
   }
 
   handleFileInput(files: FileList) {
+    this.erMessage= {};
+    this.result = {};
     this.fileToUpload = files.item(0);
 }
 
