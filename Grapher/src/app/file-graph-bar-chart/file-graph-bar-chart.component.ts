@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FileUploadService } from '../../services/file-upload.service';
-import { getCityWiseData, getFileData, getPaymentWiseData, getProductWiseData, getStateWiseData } from '../constant/ApiUrl';
 import Chart from 'chart.js'
+import { getCityWiseData, getFileData, getPaymentWiseData, getProductWiseData, getStateWiseData } from '../constant/ApiUrl';
+
 
 @Component({
-  selector: 'app-file-graphs',
-  templateUrl: './file-graphs.component.html',
-  styleUrls: ['./file-graphs.component.css']
+  selector: 'app-file-graph-bar-chart',
+  templateUrl: './file-graph-bar-chart.component.html',
+  styleUrls: ['./file-graph-bar-chart.component.css']
 })
-export class FileGraphsComponent implements OnInit {
+export class FileGraphBarChartComponent implements OnInit {
 
-  public result:any = {};
   public erMessage:any = {}
-  public LinechartCityWise = [];  
-  public LinechartStateWise = [];  
-  public LinechartProducteWise = [];  
-  public LinechartPaymentWise = [];  
+  public BarChartCityWise = [];  
+  public BarChartStateWise = [];  
+  public BarChartProducteWise = [];  
+  public BarChartPaymentWise = [];  
   public cityWiseResult:any = []
   public stateWiseResult:any = []
   public productWiseResult:any = []
@@ -30,19 +30,18 @@ export class FileGraphsComponent implements OnInit {
     this.paymentWiseData()
   }
 
-  // public getFileData() {
-  //     this.fileUploadService.getData(getFileData,{params:{fileId:'5f8b041fdf1c18dc334fee94'}}).subscribe(data => {
-  //         this.result=data;
-  //       }, error => {
-  //         this.erMessage=error.error
-  //         console.log(error);
-  //       });
-  // }
+  public generateHexColor(count){
+    let hexColorCodeArray = [];
+    for(let i=0;i<count;i++){
+      hexColorCodeArray.push( '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0'))
+    }
+    return hexColorCodeArray
+  }
 
   public getCityWiseData() {
     this.fileUploadService.getData(getCityWiseData,{params:{fileId:'5f8b041fdf1c18dc334fee94'}}).subscribe(result => {
         this.cityWiseResult=result.data;
-        this.createLineChartCityWise(this.cityWiseResult)
+        this.createBarChartCityWise(this.cityWiseResult)
       }, error => {
         this.erMessage=error.error
         console.log(error);
@@ -50,16 +49,16 @@ export class FileGraphsComponent implements OnInit {
   }
   
 
-  public createLineChartCityWise(cityData){
-    this.LinechartCityWise = new Chart('canvas1', {
-      type: 'line',
+  public createBarChartCityWise(cityData){
+    this.BarChartCityWise = new Chart('canvas1', {
+      type: 'bar',
       data: {
         labels: cityData.cityNameArray,
         datasets: [
           {
             data: cityData.userCountArray,
             borderColor: '#3cb371',
-            backgroundColor: "#0000FF",
+            backgroundColor: this.generateHexColor(cityData.cityNameArray.length),
           }
         ]
       },
@@ -84,23 +83,23 @@ export class FileGraphsComponent implements OnInit {
   public getStateWiseData() {
     this.fileUploadService.getData(getStateWiseData,{params:{fileId:'5f8b041fdf1c18dc334fee94'}}).subscribe(result => {
         this.stateWiseResult=result.data;
-        this.createLineChartStateWise(this.stateWiseResult)
+        this.createBarChartStateWise(this.stateWiseResult)
       }, error => {
         this.erMessage=error.error
         console.log(error);
       });
   }
         
-  public createLineChartStateWise(stateData){
-    this.LinechartStateWise = new Chart('canvas2', {
-      type: 'line',
+  public createBarChartStateWise(stateData){
+    this.BarChartStateWise = new Chart('canvas2', {
+      type: 'bar',
       data: {
         labels: stateData.StateNameArray,
         datasets: [
           {
             data: stateData.userCountArray,
             borderColor: '#3cb371',
-            backgroundColor: "#0000FF",
+            backgroundColor: this.generateHexColor(stateData.StateNameArray.length),
           }
         ]
       },
@@ -125,23 +124,23 @@ export class FileGraphsComponent implements OnInit {
   public productWiseData() {
     this.fileUploadService.getData(getProductWiseData,{params:{fileId:'5f8b041fdf1c18dc334fee94'}}).subscribe(result => {
         this.productWiseResult=result.data;
-        this.createLineChartProductWise(this.productWiseResult)
+        this.createBarChartProductWise(this.productWiseResult)
       }, error => {
         this.erMessage=error.error
         console.log(error);
       });
   }
 
-  public createLineChartProductWise(productData){
-    this.LinechartProducteWise = new Chart('canvas3', {
-      type: 'line',
+  public createBarChartProductWise(productData){
+    this.BarChartProducteWise = new Chart('canvas3', {
+      type: 'bar',
       data: {
         labels: productData.ProductNameArray,
         datasets: [
           {
             data: productData.userCountArray,
             borderColor: '#3cb371',
-            backgroundColor: "#0000FF",
+            backgroundColor: this.generateHexColor(productData.ProductNameArray.length),
           }
         ]
       },
@@ -167,23 +166,23 @@ export class FileGraphsComponent implements OnInit {
   public paymentWiseData() {
     this.fileUploadService.getData(getPaymentWiseData,{params:{fileId:'5f8b041fdf1c18dc334fee94'}}).subscribe(result => {
         this.paymentWiseResult=result.data;
-        this.createLineChartPaymentWise(this.paymentWiseResult)
+        this.createBarChartPaymentWise(this.paymentWiseResult)
       }, error => {
         this.erMessage=error.error
         console.log(error);
       });
   }
 
-  public createLineChartPaymentWise(paymentData){
-    this.LinechartPaymentWise = new Chart('canvas4', {
-      type: 'line',
+  public createBarChartPaymentWise(paymentData){
+    this.BarChartPaymentWise = new Chart('canvas4', {
+      type: 'bar',
       data: {
         labels: paymentData.PaymentTypeArray,
         datasets: [
           {
             data: paymentData.userCountArray,
             borderColor: '#3cb371',
-            backgroundColor: "#0000FF",
+            backgroundColor: this.generateHexColor(paymentData.PaymentTypeArray.length),
           }
         ]
       },
@@ -204,5 +203,6 @@ export class FileGraphsComponent implements OnInit {
     });  
 
   }
+
 
 }

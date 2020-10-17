@@ -6,12 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 import { FileGraphsComponent } from './file-graphs/file-graphs.component';
+import { FileGraphBarChartComponent } from './file-graph-bar-chart/file-graph-bar-chart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FileUploaderComponent,
-    FileGraphsComponent
+    FileGraphsComponent,
+    FileGraphBarChartComponent
   ],
   imports: [
     BrowserModule,
