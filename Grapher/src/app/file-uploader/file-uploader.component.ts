@@ -11,6 +11,7 @@ import { uploadFile } from '../constant/ApiUrl';
 export class FileUploaderComponent implements OnInit {
 
   public fileToUpload: File = null;
+  public result:any = [];
 
   constructor(public fileUploadService:FileUploadService) { }
 
@@ -19,6 +20,8 @@ export class FileUploaderComponent implements OnInit {
 
   uploadFileToActivity() {
     this.fileUploadService.postFile(this.fileToUpload,uploadFile).subscribe(data => {
+        this.result=data;
+        console.log(this.result)
       }, error => {
         console.log(error);
       });
